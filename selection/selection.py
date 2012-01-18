@@ -7,4 +7,4 @@ def remove_smallest(unsorted_list):
         if value < smaller:
             smaller = value
     unsorted_list.remove(smaller)
-    return unsorted_list
+    return smaller, unsorted_list
