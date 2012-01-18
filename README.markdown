@@ -1,6 +1,7 @@
 # Algorithms' implementations in Python
 
-The aim of this project is to implement in Python some algorithms I've studied.
+The aim of this project is to implement in Python some algorithms I've studied,
+in order to practice.
 
 ## selection
 
@@ -11,3 +12,6 @@ Algorithms for finding the kth smallest number in a list (the kth order statisti
 * kth_by_median_of_medians  O(n)
 * kth_random_pivot          O(n)
 
+## sorting
+
+* mergesort                 O(nlogn)
