@@ -2,6 +2,7 @@ from utils import split_list
 
 
 def merge(left, right):
+    # TODO: Needs testing
     result = []
     for item in left:
         smaller_items, right = split_list(right, item)

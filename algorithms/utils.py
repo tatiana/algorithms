@@ -11,6 +11,7 @@ def remove_smallest(unsorted_list):
 
 
 def split_list(sorted_list, value):
+    # TODO: Needs testing
     smaller = []
     larger = []
     for item in sorted_list:
