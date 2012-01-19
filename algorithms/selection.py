@@ -1,5 +1,5 @@
 from algorithms.sorting import mergesort
-from utils import remove_smallest, split_into_chunks, get_median, get_kth
+from utils import remove_smallest, split_into_chunks, get_median, get_kth, pivot_list
 
 CHUNK_SIZE = 5
 
@@ -31,14 +31,7 @@ def kth_by_mom(unsorted_list, k):
 
     size = len(medians_list)
     mom = kth_by_mom(medians_list, size / 2 + (size % 2))
-    smaller = []
-    larger = []
-    for value in unsorted_list:
-        if value < mom:
-            smaller.append(value)
-        else:
-            larger.append(value)
-
+    smaller, larger = pivot_list(unsorted_list, mom)
     values_before_mom = len(smaller)
 
     if values_before_mom == (k - 1):

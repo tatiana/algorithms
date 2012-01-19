@@ -24,7 +24,7 @@ def split_list(sorted_list, value):
 
 def grouper(values_list, n):
     " Split values_list into n-sized chunks"
-    # TODO: Needs testing
+    # TODO: Needs testing / rename
     for i in xrange(0, len(values_list), n):
         yield values_list[i: i + n]
 
@@ -43,3 +43,15 @@ def get_median(unsorted_list):
     size = len(unsorted_list)
     median_index = (size / 2) + (size % 2)
     return get_kth(unsorted_list, median_index)
+
+
+def pivot_list(unsorted_list, pivot):
+    smaller = []
+    larger = []
+    for value in unsorted_list:
+        if value < pivot:
+            smaller.append(value)
+        else:
+            larger.append(value)
+    return smaller, larger
+
