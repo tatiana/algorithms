@@ -1,11 +1,11 @@
-from utils import split_list
+from utils import split_list_by_pivot
 
 
 def merge(left, right):
     # TODO: Needs testing
     result = []
     for item in left:
-        smaller_items, right = split_list(right, item)
+        smaller_items, right = split_list_by_pivot(right, item)
         result = result + smaller_items + [item]
     if right:
         result = result + right

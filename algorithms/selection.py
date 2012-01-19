@@ -1,6 +1,6 @@
 import random
 from algorithms.sorting import mergesort
-from utils import remove_smallest, split_into_chunks, get_median, get_kth, pivot_list
+from utils import remove_smallest, split_into_chunks, get_median, get_kth, split_list_by_pivot
 
 CHUNK_SIZE = 5
 
@@ -31,7 +31,7 @@ def kth_by_mom(unsorted_list, k):
 
     size = len(medians_list)
     mom = kth_by_mom(medians_list, size / 2 + (size % 2))
-    smaller, larger = pivot_list(unsorted_list, mom)
+    smaller, larger = split_list_by_pivot(unsorted_list, mom)
     values_before_mom = len(smaller)
 
     if values_before_mom == (k - 1):
@@ -44,7 +44,7 @@ def kth_by_mom(unsorted_list, k):
 
 def kth_by_quickselect(unsorted_list, k):
     pivot = random.choice(unsorted_list)
-    smaller, larger = pivot_list(unsorted_list, pivot)
+    smaller, larger = split_list_by_pivot(unsorted_list, pivot)
     values_before_pivot = len(smaller)
     if values_before_pivot == k - 1:
         return pivot

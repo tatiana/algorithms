@@ -10,21 +10,9 @@ def remove_smallest(unsorted_list):
     return smaller, unsorted_list
 
 
-def split_list(sorted_list, value):
-    # TODO: Needs testing
-    smaller = []
-    larger = []
-    for item in sorted_list:
-        if item < value:
-            smaller.append(item)
-        else:
-            larger.append(item)
-    return smaller, larger
-
-
 def split_nsized_chunks(values_list, n):
-    " Split values_list into n-sized chunks"
-    # TODO: Needs testing / rename
+    # TODO: Needs testing
+    "Split values_list into n-sized chunks"
     for i in xrange(0, len(values_list), n):
         yield values_list[i: i + n]
 
@@ -34,18 +22,21 @@ def split_into_chunks(values_list, n):
 
 
 def get_kth(unsorted_list, k):
+    # TODO: Needs testing
     unsorted_list.sort()
     sorted_list = unsorted_list
     return sorted_list[k - 1]
 
 
 def get_median(unsorted_list):
+    # TODO: Needs testing
     size = len(unsorted_list)
     median_index = (size / 2) + (size % 2)
     return get_kth(unsorted_list, median_index)
 
 
-def pivot_list(unsorted_list, pivot):
+def split_list_by_pivot(unsorted_list, pivot):
+    # TODO: Needs testing
     smaller = []
     larger = []
     for value in unsorted_list:
