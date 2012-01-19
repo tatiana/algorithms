@@ -1,9 +1,10 @@
 import unittest
-from algorithms.selection import kth_by_extreme, kth_by_sorting, kth_by_mom
+from algorithms.selection import kth_by_extreme, kth_by_sorting, kth_by_mom, kth_by_quickselect
 
-# TODO: Try using unittest2 on this CommonTests class
+
+# TODO: Test unittest2
 # http://docs.python.org/library/unittest.html#load-tests-protocol
-class CommonTests(object):
+class CommonTestCase(object):
 
     def test_kth_list_2_return_2(self):
         original_list = [2]
@@ -13,7 +14,6 @@ class CommonTests(object):
         self.assertEquals(expected, received)
 
     def test_kth_range_3_return_2th_item(self):
-        "Selection by Sorting: list=[0, 1, 2] kth=2 returns 1"
         original_list = [0, 1, 2]
         kth = 2
         expected = 1
@@ -35,29 +35,35 @@ class CommonTests(object):
         self.assertEquals(expected, received)
 
 
-class SelectionByExtremeTestCase(unittest.TestCase, CommonTests):
+class SelectionByExtremeTestCase(unittest.TestCase, CommonTestCase):
 
     def setUp(self):
         self.selection_func = kth_by_extreme
 
 
-class SelectionBySortingTestCase(unittest.TestCase, CommonTests):
+class SelectionBySortingTestCase(unittest.TestCase, CommonTestCase):
 
     def setUp(self):
         self.selection_func = kth_by_sorting
 
 
-class SelectionByMOMTestCase(unittest.TestCase, CommonTests):
+class SelectionByMOMTestCase(unittest.TestCase, CommonTestCase):
 
     def setUp(self):
         self.selection_func = kth_by_mom
 
-    def test_kth_by_mom_range_3_return_2th_item(self):
+    def test_kth_range_3_return_2th_item(self):
         original_list = range(1, 16)
         kth = 8
         expected = 8
-        received = kth_by_mom(original_list, kth)
+        received = self.selection_func(original_list, kth)
         self.assertEquals(expected, received)
+
+
+class SelectionByQuickSelectTestCase(unittest.TestCase, CommonTestCase):
+
+    def setUp(self):
+        self.selection_func = kth_by_quickselect
 
 
 if __name__ == '__main__':

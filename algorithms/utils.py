@@ -51,7 +51,6 @@ def pivot_list(unsorted_list, pivot):
     for value in unsorted_list:
         if value < pivot:
             smaller.append(value)
-        else:
+        elif value > pivot:
             larger.append(value)
     return smaller, larger
-
