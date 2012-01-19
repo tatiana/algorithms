@@ -18,7 +18,6 @@ def kth_by_sorting(unsorted_list, k):
 
 
 def kth_by_mom(unsorted_list, k):
-    # TODO: Test
     if len(unsorted_list) <= CHUNK_SIZE:
         return get_kth(unsorted_list, k)
 

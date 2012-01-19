@@ -22,7 +22,7 @@ def split_list(sorted_list, value):
     return smaller, larger
 
 
-def grouper(values_list, n):
+def split_nsized_chunks(values_list, n):
     " Split values_list into n-sized chunks"
     # TODO: Needs testing / rename
     for i in xrange(0, len(values_list), n):
@@ -30,7 +30,7 @@ def grouper(values_list, n):
 
 
 def split_into_chunks(values_list, n):
-    return list(grouper(values_list, n))
+    return list(split_nsized_chunks(values_list, n))
 
 
 def get_kth(unsorted_list, k):
