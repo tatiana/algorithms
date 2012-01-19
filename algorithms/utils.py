@@ -20,3 +20,26 @@ def split_list(sorted_list, value):
         else:
             larger.append(item)
     return smaller, larger
+
+
+def grouper(values_list, n):
+    " Split values_list into n-sized chunks"
+    # TODO: Needs testing
+    for i in xrange(0, len(values_list), n):
+        yield values_list[i: i + n]
+
+
+def split_into_chunks(values_list, n):
+    return list(grouper(values_list, n))
+
+
+def get_kth(unsorted_list, k):
+    unsorted_list.sort()
+    sorted_list = unsorted_list
+    return sorted_list[k - 1]
+
+
+def get_median(unsorted_list):
+    size = len(unsorted_list)
+    median_index = (size / 2) + (size % 2)
+    return get_kth(unsorted_list, median_index)
