@@ -184,33 +184,13 @@ def split_list_by_pivot(unsorted_list, pivot):
             larger.append(value)
     return smaller, larger
 
-def merge_tati(left, right):
-    # TODO: Needs testing
-    result = []
-    for item in left:
-        smaller_items, right = split_list_by_pivot(right, item)
-        result = result + smaller_items + [item]
-    if right:
-        result = result + right
-    return result
-
+from algorithms.sorting import mergesort as mergesort_tati_r
 @print_timing
 def mergesort_tati(unsorted_list):
     return mergesort_tati_r(unsorted_list)
 
-def mergesort_tati_r(unsorted_list):
-    if len(unsorted_list) < 2:
-        return unsorted_list
-    else:
-        middle = len(unsorted_list) / 2
-        left_list = unsorted_list[:middle]
-        left = mergesort_tati_r(left_list)
-        right_list = unsorted_list[middle:]
-        right = mergesort_tati_r(right_list)
-        return merge_tati(left, right)
-
 # run test if script is executed
-if __name__ == "__main__" :
+def main():
     print "timing 7 sorting algorithms with a list of 1000 integers:"
     # make a true copy of list1 each time
     list2 = list(list1)
@@ -254,6 +234,8 @@ if __name__ == "__main__" :
 
     #raw_input( "Press Enter to continue..." )
 
+if __name__ == "__main__" :
+    main()
 """
 typical results:
 timing 7 sorting algorithms with a list of 1000 integers:

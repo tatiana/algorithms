@@ -1,5 +1,5 @@
 import random
-from algorithms.sorting import mergesort
+from algorithms.sorting2 import mergesort
 from utils import remove_smallest, split_into_chunks, get_median, get_kth, split_list_by_pivot
 
 CHUNK_SIZE = 5
