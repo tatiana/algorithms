@@ -102,3 +102,14 @@ class BSTTestCase(unittest.TestCase):
         bst.insert(13)
         bst.insert(14)
         self.assertEquals(bst.depth(), 3)
+
+    def test_bst_min_empty(self):
+        bst = BinarySearchTree()
+        self.assertEqual(bst.min(), False)
+
+    def test_bst_min_num_list(self):
+        bst = BinarySearchTree()
+        num_list = [9, 3, 4, 1, 6, 8, 2, 7, 5]
+        for n in num_list:
+            bst.insert(n)
+        self.assertEqual(bst.min(), 1)

@@ -54,6 +54,14 @@ class BinarySearchTree(Tree):
             rdepth = self.depth(node.right)
             return max(ldepth, rdepth) + 1
 
+    def min(self):
+        node = self.root
+        if node is None:
+            return False
+        while node.left is not None:
+            node = node.left
+        return node.value
+
 # TODO:
 # - convert depth to property
 # - check if there isn't a best way of function default value use object attribute
