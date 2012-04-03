@@ -1,6 +1,6 @@
 import unittest
 from algorithms.data_structures import Node, Tree, BinarySearchTree
-
+from fixtures import TREE_WITH_1, TREE_WITH_6, TREE_WITH_7
 
 class NodeTestCase(unittest.TestCase):
 
@@ -194,6 +194,48 @@ class BSTTestCase(unittest.TestCase):
         bst.insert(28)
         bst.insert(30)
         root = bst.remove(29)
+        self.assertEquals(bst.size, 2)
         self.assertEquals(root.value, 28)
         self.assertEquals(root.right.value, 30)
         self.assertEquals(root.left, None)
+
+    def test_bst_with_complex_tree(self):
+        bst = BinarySearchTree()
+        bst.insert(6)
+        bst.insert(8)
+        bst.insert(2)
+        bst.insert(1)
+        bst.insert(4)
+        bst.insert(3)
+        root = bst.remove(6)
+        self.assertEquals(bst.size, 5)
+        self.assertEquals(root.value, 4)
+
+    def test_bst_to_string_tree_with_1_node(self):
+        bst = BinarySearchTree()
+        bst.insert(1)
+        printlines = bst.to_string(bst.root)
+        self.assertEquals(printlines, TREE_WITH_1)
+
+    def test_bst_to_string_tree_with_6_nodes(self):
+        bst = BinarySearchTree()
+        bst.insert(6)
+        bst.insert(8)
+        bst.insert(2)
+        bst.insert(1)
+        bst.insert(4)
+        bst.insert(3)
+        printlines = bst.to_string(bst.root)
+        self.assertEquals(printlines, TREE_WITH_6)
+
+    def test_bst_to_string_tree_with_7_nodes(self):
+        bst = BinarySearchTree()
+        bst.insert(4)
+        bst.insert(2)
+        bst.insert(1)
+        bst.insert(3)
+        bst.insert(6)
+        bst.insert(5)
+        bst.insert(7)
+        printlines = bst.to_string(bst.root)
+        self.assertEquals(printlines, TREE_WITH_7)

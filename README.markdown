@@ -17,3 +17,8 @@ Algorithms for finding the kth smallest number in a list (the kth order statisti
 Algorithms for sorting - yep, I know Python's default sort method ;)
 
 * mergesort                 O(nlogn)
+
+
+# data structures
+
+* BinarySearchTree

@@ -62,6 +62,35 @@ class BinarySearchTree(Tree):
             node = node.left
         return node
 
+    def predecessor(self, node):
+        return self.max(node.left)
+
+    def to_string(self, node):
+        output_string = ""
+        depth = self.depth(node)
+        nodes_in_level = [node]
+
+        for level in xrange(depth):
+            next_level_items = []
+            n_spaces = 2**(depth-level-1) - 1
+            current_line = n_spaces * " "
+            n_spaces =  2**(depth-level) - 1
+            middle_spaces = n_spaces * " "
+
+            for item in nodes_in_level:
+                if item.value:
+                    current_line = "%s%d%s"%(current_line, item.value, middle_spaces)
+                else:
+                    current_line  = "%s %s"% (current_line, middle_spaces)
+                for son in [item.left, item.right]:
+                    if son is not None:
+                        next_level_items.append(son)
+                    else:
+                        next_level_items.append(Node(0))
+            output_string = "\n".join([output_string, current_line.rstrip()])
+            nodes_in_level = next_level_items
+        return output_string
+
     def query(self, value, node='root'):
         if node == 'root':
             node = self.root
@@ -73,9 +102,6 @@ class BinarySearchTree(Tree):
             return self.query(value, node.left)
         else:
             return self.query(value, node.right)
-
-    def predecessor(self, node):
-        return self.max(node.left)
 
     def remove_node(self, value, node='root'):
         if node == 'root':
