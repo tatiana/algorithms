@@ -43,7 +43,6 @@ class BinarySearchTree(Tree):
         self.size += 1
 
     def max(self, node='root'):
-        # FIXME: recursion
         if node == 'root':
             node = self.root
         if node is None:
@@ -53,7 +52,6 @@ class BinarySearchTree(Tree):
         return node
 
     def min(self, node='root'):
-        # FIXME: recursion
         if node == 'root':
             node = self.root
         if node is None:
@@ -90,6 +88,7 @@ class BinarySearchTree(Tree):
             output_string = "\n".join([output_string, current_line.rstrip()])
             nodes_in_level = next_level_items
         return output_string
+
 
     def query(self, value, node='root'):
         if node == 'root':
@@ -137,8 +136,3 @@ class BinarySearchTree(Tree):
             self.root = self.remove_node(value)
             return self.root
 
-
-
-# TODO:
-# - convert depth to property
-# - check if there isn't a best way of function default value use object attribute
