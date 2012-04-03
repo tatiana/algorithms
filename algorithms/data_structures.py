@@ -19,6 +19,16 @@ class BinarySearchTree(Tree):
         self.root = None
         self.size = 0
 
+    def depth(self, node='root'):
+        if node == 'root':
+            node = self.root
+        if node is None:
+            return 0
+        else:
+            ldepth = self.depth(node.left)
+            rdepth = self.depth(node.right)
+            return max(ldepth, rdepth) + 1
+
     def insert_node(self, root, value):
         if root is None:
             return Node(value)
@@ -32,7 +42,27 @@ class BinarySearchTree(Tree):
         self.root = self.insert_node(self.root, value)
         self.size += 1
 
-    def lookup(self, value, node='root'):
+    def max(self, node='root'):
+        # FIXME: recursion
+        if node == 'root':
+            node = self.root
+        if node is None:
+            return False
+        while node.right is not None:
+            node = node.right
+        return node
+
+    def min(self, node='root'):
+        # FIXME: recursion
+        if node == 'root':
+            node = self.root
+        if node is None:
+            return False
+        while node.left is not None:
+            node = node.left
+        return node
+
+    def query(self, value, node='root'):
         if node == 'root':
             node = self.root
         if node is None:
@@ -40,27 +70,48 @@ class BinarySearchTree(Tree):
         elif node.value == value:
             return node
         elif node.value > value:
-            return self.lookup(value, node.left)
+            return self.query(value, node.left)
         else:
-            return self.lookup(value, node.right)
+            return self.query(value, node.right)
 
-    def depth(self, node='root'):
+    def predecessor(self, node):
+        return self.max(node.left)
+
+    def remove_node(self, value, node='root'):
         if node == 'root':
             node = self.root
-        if node is None:
-            return 0
-        else:
-            ldepth = self.depth(node.left)
-            rdepth = self.depth(node.right)
-            return max(ldepth, rdepth) + 1
 
-    def min(self):
-        node = self.root
-        if node is None:
+        if node.value == value:
+            if (node.left is None) and (node.right is None):
+                self.size -= 1
+                return None
+            elif (node.left is None):
+                self.size -= 1
+                return node.right
+            elif (node.right is None):
+                self.size -= 1
+                return node.left
+            else:
+                predecessor = self.predecessor(node)
+                node.value = predecessor.value
+                predecessor.value = value
+                node.left = self.remove_node(value, node.left)
+        elif node.value > value:
+            node.left = self.remove_node(value, node.left)
+        else:
+            node.right = self.remove_node(value, node.right)
+
+        return node
+
+    def remove(self, value):
+        node = self.query(value)
+        if node == False:
             return False
-        while node.left is not None:
-            node = node.left
-        return node.value
+        else:
+            self.root = self.remove_node(value)
+            return self.root
+
+
 
 # TODO:
 # - convert depth to property
