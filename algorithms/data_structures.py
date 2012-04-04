@@ -19,15 +19,21 @@ class BinarySearchTree(Tree):
         self.root = None
         self.size = 0
 
-    def depth(self, node='root'):
-        if node == 'root':
-            node = self.root
+    @property
+    def depth(self):
+        return self.depth_from_node(self.root)
+
+    def depth_from_node(self, node):
         if node is None:
             return 0
         else:
-            ldepth = self.depth(node.left)
-            rdepth = self.depth(node.right)
+            ldepth = self.depth_from_node(node.left)
+            rdepth = self.depth_from_node(node.right)
             return max(ldepth, rdepth) + 1
+
+    def insert(self, value):
+        self.root = self.insert_node(self.root, value)
+        self.size += 1
 
     def insert_node(self, root, value):
         if root is None:
@@ -38,22 +44,22 @@ class BinarySearchTree(Tree):
             root.right = self.insert_node(root.right, value)
         return root
 
-    def insert(self, value):
-        self.root = self.insert_node(self.root, value)
-        self.size += 1
+    @property
+    def max(self):
+        return self.max_from_node(self.root)
 
-    def max(self, node='root'):
-        if node == 'root':
-            node = self.root
+    def max_from_node(self, node):
         if node is None:
             return False
         while node.right is not None:
             node = node.right
         return node
 
-    def min(self, node='root'):
-        if node == 'root':
-            node = self.root
+    @property
+    def min(self):
+        return self.min_from_node(self.root)
+
+    def min_from_node(self, node):
         if node is None:
             return False
         while node.left is not None:
@@ -61,11 +67,11 @@ class BinarySearchTree(Tree):
         return node
 
     def predecessor(self, node):
-        return self.max(node.left)
+        return self.max_from_node(node.left)
 
     def to_string(self, node):
         output_string = ""
-        depth = self.depth(node)
+        depth = self.depth_from_node(node)
         nodes_in_level = [node]
 
         for level in xrange(depth):
@@ -89,18 +95,26 @@ class BinarySearchTree(Tree):
             nodes_in_level = next_level_items
         return output_string
 
+    def query(self, value):
+        return self.query_from_node(value, self.root)
 
-    def query(self, value, node='root'):
-        if node == 'root':
-            node = self.root
+    def query_from_node(self, value, node):
         if node is None:
             return False
         elif node.value == value:
             return node
         elif node.value > value:
-            return self.query(value, node.left)
+            return self.query_from_node(value, node.left)
         else:
-            return self.query(value, node.right)
+            return self.query_from_node(value, node.right)
+
+    def remove(self, value):
+        node = self.query(value)
+        if node == False:
+            return False
+        else:
+            self.root = self.remove_node(value)
+            return self.root
 
     def remove_node(self, value, node='root'):
         if node == 'root':
@@ -127,12 +141,3 @@ class BinarySearchTree(Tree):
             node.right = self.remove_node(value, node.right)
 
         return node
-
-    def remove(self, value):
-        node = self.query(value)
-        if node == False:
-            return False
-        else:
-            self.root = self.remove_node(value)
-            return self.root
-
