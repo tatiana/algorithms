@@ -1,4 +1,7 @@
-# TODO: Integrate with Sphinx
+# TODO: Integrate with Sphinx, for API generation
+# TODO: Analyse by_node methods
+# TODO: ROOT_REFERENCE = 0, 1 # height, etc
+# TODO: insert list of nodes
 
 class BinaryNode(object):
 
@@ -65,6 +68,10 @@ class BinarySearchTree(Tree):
         """
         self.root = self.insert_node(self.root, value)
         self.size += 1
+
+    def insert_list(self, values_list):
+        for value in values_list:
+            self.insert(value)
 
     def insert_node(self, root, value):
         """

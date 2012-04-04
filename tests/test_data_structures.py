@@ -107,22 +107,20 @@ class BSTTestCase(unittest.TestCase):
         bst = BinarySearchTree()
         self.assertEqual(bst.min, False)
 
-    def test_bst_min_num_list(self):
+    def test_bst_min_values_list(self):
         bst = BinarySearchTree()
-        num_list = [9, 3, 4, 1, 6, 8, 2, 7, 5]
-        for n in num_list:
-            bst.insert(n)
+        values_list = [9, 3, 4, 1, 6, 8, 2, 7, 5]
+        bst.insert_list(values_list)
         self.assertEqual(bst.min.value, 1)
 
     def test_bst_max_empty(self):
         bst = BinarySearchTree()
         self.assertEqual(bst.max, False)
 
-    def test_bst_max_num_list(self):
+    def test_bst_max_values_list(self):
         bst = BinarySearchTree()
-        num_list = [7, 3, 4, 1, 6, 8, 2, 9, 5]
-        for n in num_list:
-            bst.insert(n)
+        values_list = [7, 3, 4, 1, 6, 8, 2, 9, 5]
+        bst.insert_list(values_list)
         self.assertEqual(bst.max.value, 9)
 
     def test_bst_remove_inexistent_item(self):
@@ -201,12 +199,8 @@ class BSTTestCase(unittest.TestCase):
 
     def test_bst_with_complex_tree(self):
         bst = BinarySearchTree()
-        bst.insert(6)
-        bst.insert(8)
-        bst.insert(2)
-        bst.insert(1)
-        bst.insert(4)
-        bst.insert(3)
+        values_list = [6, 8, 2, 1, 4, 3]
+        bst.insert_list(values_list)
         root = bst.remove(6)
         self.assertEquals(bst.size, 5)
         self.assertEquals(root.value, 4)
@@ -219,23 +213,14 @@ class BSTTestCase(unittest.TestCase):
 
     def test_bst_to_string_tree_with_6_nodes(self):
         bst = BinarySearchTree()
-        bst.insert(6)
-        bst.insert(8)
-        bst.insert(2)
-        bst.insert(1)
-        bst.insert(4)
-        bst.insert(3)
+        values_list = [6, 8, 2, 1, 4, 3]
+        bst.insert_list(values_list)
         printlines = bst.to_string(bst.root)
         self.assertEquals(printlines, TREE_WITH_6)
 
     def test_bst_to_string_tree_with_7_nodes(self):
         bst = BinarySearchTree()
-        bst.insert(4)
-        bst.insert(2)
-        bst.insert(1)
-        bst.insert(3)
-        bst.insert(6)
-        bst.insert(5)
-        bst.insert(7)
+        values_list = [4, 2, 1, 3, 6, 5, 7]
+        bst.insert_list(values_list)
         printlines = bst.to_string(bst.root)
         self.assertEquals(printlines, TREE_WITH_7)
