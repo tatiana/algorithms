@@ -122,9 +122,10 @@ class BinarySearchTree(Tree):
         Return a string that represents graphically the sub-tree, considering
         @node as root.
 
-           4
-         2   6
-        1 3 5 7
+        Example of string returned:
+        '   4
+          2   6
+         1 3 5 7'
         """
         output_string = ""
         height = self.depth_from_node(node)
