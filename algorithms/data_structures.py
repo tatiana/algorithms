@@ -1,4 +1,6 @@
-class Node(object):
+# TODO: Integrate with Sphinx
+
+class BinaryNode(object):
 
     def __init__(self, value):
         self.right = None
@@ -69,7 +71,7 @@ class BinarySearchTree(Tree):
         Create a node with @value and add it to the subtree of a given @root.
         """
         if root is None:
-            return Node(value)
+            return BinaryNode(value)
         elif root.value > value:
             root.left = self.insert_node(root.left, value)
         else:
@@ -147,7 +149,7 @@ class BinarySearchTree(Tree):
                     if son is not None:
                         next_level_items.append(son)
                     else:
-                        next_level_items.append(Node(0))
+                        next_level_items.append(BinaryNode(0))
             output_string = "\n".join([output_string, current_line.rstrip()])
             nodes_in_level = next_level_items
         return output_string

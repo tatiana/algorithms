@@ -1,11 +1,11 @@
 import unittest
-from algorithms.data_structures import Node, Tree, BinarySearchTree
+from algorithms.data_structures import BinaryNode, Tree, BinarySearchTree
 from fixtures import TREE_WITH_1, TREE_WITH_6, TREE_WITH_7
 
-class NodeTestCase(unittest.TestCase):
+class BinaryNodeTestCase(unittest.TestCase):
 
     def test_node_creation(self):
-        node = Node('palavra')
+        node = BinaryNode('palavra')
         self.assertEquals(node.left, None)
         self.assertEquals(node.right, None)
         self.assertEquals(node.value, 'palavra')
