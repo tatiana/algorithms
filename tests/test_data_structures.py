@@ -2,6 +2,7 @@ import unittest
 from algorithms.data_structures import BinaryNode, Tree, BinarySearchTree
 from fixtures import TREE_WITH_1, TREE_WITH_6, TREE_WITH_7
 
+
 class BinaryNodeTestCase(unittest.TestCase):
 
     def test_node_creation(self):

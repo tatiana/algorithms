@@ -3,6 +3,7 @@
 # TODO: ROOT_REFERENCE = 0, 1 # height, etc
 # TODO: insert list of nodes
 
+
 class BinaryNode(object):
 
     def __init__(self, value):
@@ -142,16 +143,16 @@ class BinarySearchTree(Tree):
 
         for level in xrange(height):
             next_level_items = []
-            n_spaces = 2**(height-level-1) - 1
+            n_spaces = 2 ** (height - level - 1) - 1
             current_line = n_spaces * " "
-            n_spaces =  2**(height-level) - 1
+            n_spaces = 2 ** (height - level) - 1
             middle_spaces = n_spaces * " "
 
             for item in nodes_in_level:
                 if item.value:
-                    current_line = "%s%d%s"%(current_line, item.value, middle_spaces)
+                    current_line = "%s%d%s" % (current_line, item.value, middle_spaces)
                 else:
-                    current_line  = "%s %s"% (current_line, middle_spaces)
+                    current_line = "%s %s" % (current_line, middle_spaces)
                 for son in [item.left, item.right]:
                     if son is not None:
                         next_level_items.append(son)
