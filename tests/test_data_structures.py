@@ -74,34 +74,34 @@ class BSTTestCase(unittest.TestCase):
         self.assertEquals(answer.value, 9)
         self.assertEquals(answer, bst.root.left)
 
-    def test_bst_depth_0(self):
+    def test_bst_height_0(self):
         bst = BinarySearchTree()
-        self.assertEquals(bst.depth, 0)
+        self.assertEquals(bst.height, 0)
 
-    def test_bst_depth_1(self):
+    def test_bst_height_1(self):
         bst = BinarySearchTree()
         bst.insert(11)
-        self.assertEquals(bst.depth, 1)
+        self.assertEquals(bst.height, 1)
 
-    def test_bst_depth_2_two_nodes(self):
+    def test_bst_height_2_two_nodes(self):
         bst = BinarySearchTree()
         bst.insert(12)
         bst.insert(13)
-        self.assertEquals(bst.depth, 2)
+        self.assertEquals(bst.height, 2)
 
-    def test_bst_depth_2_three_nodes(self):
+    def test_bst_height_2_three_nodes(self):
         bst = BinarySearchTree()
         bst.insert(15)
         bst.insert(14)
         bst.insert(16)
-        self.assertEquals(bst.depth, 2)
+        self.assertEquals(bst.height, 2)
 
-    def test_bst_depth_3(self):
+    def test_bst_height_3(self):
         bst = BinarySearchTree()
         bst.insert(12)
         bst.insert(13)
         bst.insert(14)
-        self.assertEquals(bst.depth, 3)
+        self.assertEquals(bst.height, 3)
 
     def test_bst_min_empty(self):
         bst = BinarySearchTree()
@@ -137,7 +137,7 @@ class BSTTestCase(unittest.TestCase):
         was_found = bst.query(16)
         self.assertEquals(root, None)
         self.assertEquals(was_found, False)
-        self.assertEquals(bst.depth, 0)
+        self.assertEquals(bst.height, 0)
         self.assertEquals(bst.size, 0)
 
     def test_bst_remove_smaller_leaf_from_tree_with_2(self):
@@ -146,7 +146,7 @@ class BSTTestCase(unittest.TestCase):
         bst.insert(17)
         root = bst.remove(17)
         self.assertEquals(root.value, 18)
-        self.assertEquals(bst.depth, 1)
+        self.assertEquals(bst.height, 1)
         self.assertEquals(bst.size, 1)
 
     def test_bst_remove_larger_leaf_from_tree_with_2(self):
@@ -155,7 +155,7 @@ class BSTTestCase(unittest.TestCase):
         bst.insert(20)
         root = bst.remove(20)
         self.assertEquals(root.value, 19)
-        self.assertEquals(bst.depth, 1)
+        self.assertEquals(bst.height, 1)
         self.assertEquals(bst.size, 1)
 
     def test_bst_remove_root_from_tree_with_smaller_leaf(self):
@@ -164,7 +164,7 @@ class BSTTestCase(unittest.TestCase):
         bst.insert(21)
         root = bst.remove(22)
         self.assertEquals(root.value, 21)
-        self.assertEquals(bst.depth, 1)
+        self.assertEquals(bst.height, 1)
         self.assertEquals(bst.size, 1)
 
     def test_bst_remove_root_from_tree_with_larger_leaf(self):
@@ -173,7 +173,7 @@ class BSTTestCase(unittest.TestCase):
         bst.insert(24)
         root = bst.remove(23)
         self.assertEquals(root.value, 24)
-        self.assertEquals(bst.depth, 1)
+        self.assertEquals(bst.height, 1)
         self.assertEquals(bst.size, 1)
 
     def test_bst_remove_all_items_of_balanced_tree_with_3_items(self):
@@ -185,7 +185,7 @@ class BSTTestCase(unittest.TestCase):
         bst.remove(25)
         root = bst.remove(26)
         self.assertEquals(root, None)
-        self.assertEquals(bst.depth, 0)
+        self.assertEquals(bst.height, 0)
         self.assertEquals(bst.size, 0)
 
     def test_bst_remove_root_with_left_and_right_children(self):
