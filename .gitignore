@@ -1,3 +1,7 @@
 *.coverage
 *.pyc
 *.sw[a-z]
+.project
+.pydevproject
+
+
