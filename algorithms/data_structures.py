@@ -235,17 +235,57 @@ class AVLTree(BinarySearchTree):
     """
 
     def is_balanced(self):
-        return self.is_subtree_balanced(self.root)
+        is_balanced, factor = self.is_subtree_balanced(self.root)
+        return is_balanced
 
     def is_subtree_balanced(self, node):
         if node is None:
-            return True
+            return True, 0
         else:
-            left = self.depth_from_node(node.left)
-            right = self.depth_from_node(node.right)
-            if abs(left - right) > 1:
-                return False
+            left_depth = self.depth_from_node(node.left)
+            right_depth = self.depth_from_node(node.right)
+            delta = left_depth - right_depth
+            if abs(delta) > 1:
+                return False, delta
             else:
-                left = self.is_subtree_balanced(node.left)
-                right = self.is_subtree_balanced(node.right)
-                return left and right
+                is_left_balanced, factor = self.is_subtree_balanced(node.left)
+                if not is_left_balanced:
+                    return False, factor
+                else:
+                    is_right_balanced, factor = self.is_subtree_balanced(node.right)
+                    if not is_right_balanced:
+                        return False, factor
+                return True, delta
+
+    def _return_unbalanced_node(self, node):
+        if node is None:
+            return None, 0
+        else:
+            left_depth = self.depth_from_node(node.left)
+            right_depth = self.depth_from_node(node.right)
+            delta = left_depth - right_depth
+            if abs(delta) > 1:
+                return node, delta
+            else:
+                if not self.is_subtree_balanced(node.left):
+                    return node.left
+                elif not self.is_subtree_balanced(node.right):
+                    return node.right
+            return None, delta
+
+    def insert_node(self, root, value):
+        root = super(AVLTree, self).insert_node(root, value)
+        unbalanced_node, factor = self._return_unbalanced_node(root)
+        if unbalanced_node is None:
+            return root
+        else:
+
+            if (factor == 2):
+                left_left_depth = self.depth_from_node(unbalanced_node.left.left)
+                left_right_depth = self.depth_from_node(unbalanced_node.left.right)
+                if left_left_depth > left_right_depth:
+                    old_root = unbalanced_node
+                    new_root = unbalanced_node.left
+                    old_root.left = new_root.right
+                    new_root.right = old_root
+            return new_root

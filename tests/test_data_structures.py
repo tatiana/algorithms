@@ -244,8 +244,16 @@ class AVLTTestCase(unittest.TestCase):
         avl_tree.insert_list(values_list)
         self.assertEquals(avl_tree.is_balanced(), True)
 
-    #def test_avl_with_three_keys_is_balanced(self):
-    #    values_list = [1, 2, 3]
-    #    avl_tree = AVLTree()
-    #    avl_tree.insert_list(values_list)
-    #    self.assertEquals(avl_tree.is_balanced(), True)
+    def test_avl_unbalanced_with_insertion_becomes_balanced_case_i(self):
+        values_list = [5, 4, 3]
+        """
+            5
+          4
+        3
+        will become:
+            4
+          3   5
+        """
+        avl_tree = AVLTree()
+        avl_tree.insert_list(values_list)
+        self.assertEquals(avl_tree.is_balanced(), True)
