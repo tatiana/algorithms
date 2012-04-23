@@ -1,5 +1,5 @@
 import unittest
-from algorithms.data_structures import BinaryNode, Tree, BinarySearchTree
+from algorithms.data_structures import BinaryNode, Tree, BinarySearchTree, AVLTree
 from fixtures import TREE_WITH_1, TREE_WITH_6, TREE_WITH_7
 
 
@@ -225,3 +225,27 @@ class BSTTestCase(unittest.TestCase):
         bst.insert_list(values_list)
         printlines = bst.to_string(bst.root)
         self.assertEquals(printlines, TREE_WITH_7)
+
+
+class AVLTTestCase(unittest.TestCase):
+
+    def test_empty_avl_is_balanced(self):
+        avl_tree = AVLTree()
+        self.assertEquals(avl_tree.is_balanced(), True)
+
+    def test_avl_with_one_key_is_balanced(self):
+        avl_tree = AVLTree()
+        avl_tree.insert(1)
+        self.assertEquals(avl_tree.is_balanced(), True)
+
+    def test_avl_with_two_keys_is_balanced(self):
+        values_list = [1, 2]
+        avl_tree = AVLTree()
+        avl_tree.insert_list(values_list)
+        self.assertEquals(avl_tree.is_balanced(), True)
+
+    #def test_avl_with_three_keys_is_balanced(self):
+    #    values_list = [1, 2, 3]
+    #    avl_tree = AVLTree()
+    #    avl_tree.insert_list(values_list)
+    #    self.assertEquals(avl_tree.is_balanced(), True)

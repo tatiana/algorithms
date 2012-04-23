@@ -225,3 +225,27 @@ class BinarySearchTree(Tree):
             node.right = self.remove_node(value, node.right)
 
         return node
+
+
+class AVLTree(BinarySearchTree):
+    """
+    Based on Adelson-Velskii and Landis proposal for Balanced Search Trees.
+    If insertion or deletion get the tree out of balance, then we fix it
+    immediatelly.
+    """
+
+    def is_balanced(self):
+        return self.is_subtree_balanced(self.root)
+
+    def is_subtree_balanced(self, node):
+        if node is None:
+            return True
+        else:
+            left = self.depth_from_node(node.left)
+            right = self.depth_from_node(node.right)
+            if abs(left - right) > 1:
+                return False
+            else:
+                left = self.is_subtree_balanced(node.left)
+                right = self.is_subtree_balanced(node.right)
+                return left and right
