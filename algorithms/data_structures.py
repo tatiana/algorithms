@@ -338,3 +338,8 @@ class AVLTree(BinarySearchTree):
         root = super(AVLTree, self).insert_node(root, value)
         root = self._balance_tree(root)
         return root
+
+    def remove_node(self, root, value):
+        root = super(AVLTree, self).remove_node(root, value)
+        root = self._balance_tree(root)
+        return root

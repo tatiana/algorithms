@@ -321,3 +321,24 @@ class AVLTTestCase(unittest.TestCase):
         avl_tree = AVLTree()
         avl_tree.insert_list(values_list)
         self.assertEquals(avl_tree.is_balanced(), True)
+
+    def test_avl_node_removal_complex(self):
+        values_list = [35, 19, 62, 5, 24, 61, 86, 4, 6, 22, 28, 94, 20, 23, 26, 30]
+        """
+        given the AVL tree:
+                      35
+                19           62
+           5        24     61   86
+         4   6   22   28          94
+               20 23 26 30
+
+        - node 94 becomes:
+
+                  24
+            19           35
+         5    22      28    62
+        4 6  20 23  26 30  61 86
+        """
+        avl_tree = AVLTree()
+        avl_tree.insert_list(values_list)
+        self.assertEquals(avl_tree.is_balanced(), True)
