@@ -302,18 +302,20 @@ class AVLTree(BinarySearchTree):
         new_parent.right = old_parent
         return new_parent
 
-    def insert_node(self, root, value):
-        root = super(AVLTree, self).insert_node(root, value)
+    def _balance_tree(self, root):
         unbalanced_node, factor = self._return_unbalanced_node(root)
         if unbalanced_node is None:
             return root
         else:
             parent_unbalanced = self.retrieve_parent(unbalanced_node, root)
-            if (factor == 2):  # single right rotation
+            if (factor == 2):
                 left_left_depth = self.depth_from_node(unbalanced_node.left.left)
                 left_right_depth = self.depth_from_node(unbalanced_node.left.right)
                 delta = left_left_depth - left_right_depth
                 if delta == 1:
+                    new_root = self._rotate_right(unbalanced_node)
+                else:
+                    unbalanced_node.left = self._rotate_left(unbalanced_node.left)
                     new_root = self._rotate_right(unbalanced_node)
             elif (factor == -2):
                 right_left_depth = self.depth_from_node(unbalanced_node.right.left)
@@ -322,9 +324,8 @@ class AVLTree(BinarySearchTree):
                 if delta == -1:
                     new_root = self._rotate_left(unbalanced_node)
                 else:
-                    pass
-                    # right rotation with R as root
-                    # left rotation with P as root
+                    unbalanced_node.right = self._rotate_right(unbalanced_node.right)
+                    new_root = self._rotate_left(unbalanced_node)
 
             if parent_unbalanced is None:
                 root = new_root
@@ -333,4 +334,7 @@ class AVLTree(BinarySearchTree):
             else:
                 parent_unbalanced.right = new_root
 
-            return root
+    def insert_node(self, root, value):
+        root = super(AVLTree, self).insert_node(root, value)
+        root = self._balance_tree(root)
+        return root
