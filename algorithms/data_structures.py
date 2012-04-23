@@ -206,7 +206,6 @@ class BinarySearchTree(Tree):
                 else:
                     return self.retrieve_parent(node, node.right)
 
-
     def to_string(self, node):
         """
         Return a string that represents graphically the sub-tree, considering
@@ -288,7 +287,6 @@ class AVLTree(BinarySearchTree):
                 elif not self.is_subtree_balanced(node.right):
                     return node.right
             return None, delta
-
 
     def _rotate_left(self, old_parent):
         new_parent = old_parent.right
