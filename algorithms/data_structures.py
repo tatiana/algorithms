@@ -274,13 +274,13 @@ class AVLTree(BinarySearchTree):
             return None, delta
 
     def insert_node(self, root, value):
+        # FIXME - not returning root, but balanced node!
         root = super(AVLTree, self).insert_node(root, value)
         unbalanced_node, factor = self._return_unbalanced_node(root)
         if unbalanced_node is None:
             return root
         else:
-
-            if (factor == 2):
+            if (factor == 2):  # single rotation right
                 left_left_depth = self.depth_from_node(unbalanced_node.left.left)
                 left_right_depth = self.depth_from_node(unbalanced_node.left.right)
                 if left_left_depth > left_right_depth:
@@ -288,4 +288,13 @@ class AVLTree(BinarySearchTree):
                     new_root = unbalanced_node.left
                     old_root.left = new_root.right
                     new_root.right = old_root
-            return new_root
+            elif (factor == -2):  # single rotation left
+                right_left_depth = self.depth_from_node(unbalanced_node.right.left)
+                right_right_depth = self.depth_from_node(unbalanced_node.right.right)
+                if right_right_depth > right_left_depth:
+                    old_root = unbalanced_node
+                    new_root = unbalanced_node.right
+                    old_root.right = new_root.left
+                    new_root.left = old_root
+
+        return new_root
