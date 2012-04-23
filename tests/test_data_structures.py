@@ -271,3 +271,25 @@ class AVLTTestCase(unittest.TestCase):
         avl_tree = AVLTree()
         avl_tree.insert_list(values_list)
         self.assertEquals(avl_tree.is_balanced(), True)
+
+    def test_avl_unbalanced_with_insertion_becomes_balanced_case_i_complex(self):
+        values_list = [73, 31, 94, 7, 64, 76, 98, 3, 23, 60, 2]
+        """
+        given the AVL tree:
+                    73
+              31         94
+           7      64   76   98
+         3  23  60
+
+        + node 2 becomes:
+
+                31
+           7          73
+         3  23      64   94
+        2         60    76 98
+        """
+        avl_tree = AVLTree()
+        avl_tree.insert_list(values_list)
+        self.assertEquals(avl_tree.is_balanced(), True)
+
+

@@ -127,41 +127,6 @@ class BinarySearchTree(Tree):
         """
         return self.max_from_node(node.left)
 
-    def to_string(self, node):
-        """
-        Return a string that represents graphically the sub-tree, considering
-        @node as root.
-
-        Example of string returned:
-        '   4
-          2   6
-         1 3 5 7'
-        """
-        output_string = ""
-        height = self.depth_from_node(node)
-        nodes_in_level = [node]
-
-        for level in xrange(height):
-            next_level_items = []
-            n_spaces = 2 ** (height - level - 1) - 1
-            current_line = n_spaces * " "
-            n_spaces = 2 ** (height - level) - 1
-            middle_spaces = n_spaces * " "
-
-            for item in nodes_in_level:
-                if item.value:
-                    current_line = "%s%d%s" % (current_line, item.value, middle_spaces)
-                else:
-                    current_line = "%s %s" % (current_line, middle_spaces)
-                for son in [item.left, item.right]:
-                    if son is not None:
-                        next_level_items.append(son)
-                    else:
-                        next_level_items.append(BinaryNode(0))
-            output_string = "\n".join([output_string, current_line.rstrip()])
-            nodes_in_level = next_level_items
-        return output_string
-
     def query(self, value):
         """
         Retrieve a node with the @value from the root of the tree. If not
@@ -226,6 +191,57 @@ class BinarySearchTree(Tree):
 
         return node
 
+    def retrieve_parent(self, node, subtree):
+        if node is None or node.value == subtree.value:
+            return None
+        else:
+            if node.value > subtree.value:
+                if node.value == subtree.left.value:
+                    return subtree
+                else:
+                    return self.retrieve_parent(node, node.left)
+            else:
+                if node.value == subtree.right.value:
+                    return subtree
+                else:
+                    return self.retrieve_parent(node, node.right)
+
+
+    def to_string(self, node):
+        """
+        Return a string that represents graphically the sub-tree, considering
+        @node as root.
+
+        Example of string returned:
+        '   4
+          2   6
+         1 3 5 7'
+        """
+        output_string = ""
+        height = self.depth_from_node(node)
+        nodes_in_level = [node]
+
+        for level in xrange(height):
+            next_level_items = []
+            n_spaces = 2 ** (height - level - 1) - 1
+            current_line = n_spaces * " "
+            n_spaces = 2 ** (height - level) - 1
+            middle_spaces = n_spaces * " "
+
+            for item in nodes_in_level:
+                if item.value:
+                    current_line = "%s%d%s" % (current_line, item.value, middle_spaces)
+                else:
+                    current_line = "%s %s" % (current_line, middle_spaces)
+                for son in [item.left, item.right]:
+                    if son is not None:
+                        next_level_items.append(son)
+                    else:
+                        next_level_items.append(BinaryNode(0))
+            output_string = "\n".join([output_string, current_line.rstrip()])
+            nodes_in_level = next_level_items
+        return output_string
+
 
 class AVLTree(BinarySearchTree):
     """
@@ -273,28 +289,48 @@ class AVLTree(BinarySearchTree):
                     return node.right
             return None, delta
 
+
+    def _rotate_left(self, old_parent):
+        new_parent = old_parent.right
+        old_parent.right = new_parent.left
+        new_parent.left = old_parent
+        return new_parent
+
+    def _rotate_right(self, old_parent):
+        new_parent = old_parent.left
+        old_parent.left = new_parent.right
+        new_parent.right = old_parent
+        return new_parent
+
     def insert_node(self, root, value):
-        # FIXME - not returning root, but balanced node!
         root = super(AVLTree, self).insert_node(root, value)
         unbalanced_node, factor = self._return_unbalanced_node(root)
         if unbalanced_node is None:
             return root
         else:
-            if (factor == 2):  # single rotation right
+            parent_unbalanced = self.retrieve_parent(unbalanced_node, root)
+            if (factor == 2):  # single right rotation
                 left_left_depth = self.depth_from_node(unbalanced_node.left.left)
                 left_right_depth = self.depth_from_node(unbalanced_node.left.right)
-                if left_left_depth > left_right_depth:
-                    old_root = unbalanced_node
-                    new_root = unbalanced_node.left
-                    old_root.left = new_root.right
-                    new_root.right = old_root
-            elif (factor == -2):  # single rotation left
+                delta = left_left_depth - left_right_depth
+                if delta == 1:
+                    new_root = self._rotate_right(unbalanced_node)
+            elif (factor == -2):
                 right_left_depth = self.depth_from_node(unbalanced_node.right.left)
                 right_right_depth = self.depth_from_node(unbalanced_node.right.right)
-                if right_right_depth > right_left_depth:
-                    old_root = unbalanced_node
-                    new_root = unbalanced_node.right
-                    old_root.right = new_root.left
-                    new_root.left = old_root
+                delta = right_left_depth - right_right_depth
+                if delta == -1:
+                    new_root = self._rotate_left(unbalanced_node)
+                else:
+                    pass
+                    # right rotation with R as root
+                    # left rotation with P as root
 
-        return new_root
+            if parent_unbalanced is None:
+                root = new_root
+            elif unbalanced_node.value == parent_unbalanced.left.value:
+                parent_unbalanced.left = new_root
+            else:
+                parent_unbalanced.right = new_root
+
+            return root
