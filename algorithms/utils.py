@@ -45,3 +45,21 @@ def split_list_by_pivot(unsorted_list, pivot):
         elif value > pivot:
             larger.append(value)
     return smaller, larger
+
+
+def isprime(n):
+    n *= 1.0
+    if n % 2 == 0 and n != 2 or n % 3 == 0 and n != 3:
+        return False
+    for b in range(1, int((n ** 0.5 + 1) / 6.0 + 1)):
+        if n % (6 * b - 1) == 0:
+            return False
+        if n % (6 * b + 1) == 0:
+           return False
+    return True
+
+
+def next_prime(n):
+    for number in xrange(n + 1, 2 * n):
+        if isprime(number):
+            return number
