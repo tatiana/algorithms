@@ -1,5 +1,5 @@
 import unittest
-from algorithms.data_structures import BinaryNode, Tree, BinarySearchTree, AVLTree
+from algorithms.data_structures import AVLTree, BinaryNode, BinarySearchTree, Tree, List, MoveToFrontList #OptimalBinarySearchTree,
 from fixtures import TREE_WITH_1, TREE_WITH_6, TREE_WITH_7
 
 
@@ -342,3 +342,91 @@ class AVLTTestCase(unittest.TestCase):
         avl_tree = AVLTree()
         avl_tree.insert_list(values_list)
         self.assertEquals(avl_tree.is_balanced(), True)
+
+
+#class OptimalBSTTestCase(unittest.TestCase):
+#
+#    def test_x(self):
+#        OptimalBinarySearchTree
+
+
+class ListTestCase(unittest.TestCase):
+
+    def test_list_creation(self):
+        my_list = List()
+        self.assertEquals(my_list.root, None)
+        self.assertEquals(my_list.size, 0)
+
+    def test_insert_1_to_list(self):
+        my_list = List()
+        my_list.insert(1)
+        self.assertEquals(my_list.size, 1)
+        self.assertEquals(my_list.root.value, 1)
+        self.assertEquals(my_list.root.next, None)
+
+    def test_insert_2_and_3_to_list(self):
+        my_list = List()
+        my_list.insert(2)
+        my_list.insert(3)
+        self.assertEquals(my_list.size, 2)
+        self.assertEquals(my_list.root.value, 2)
+        self.assertEquals(my_list.root.next.value, 3)
+
+    def test_query_empty_list(self):
+        my_list = List()
+        self.assertEquals(my_list.root, None)
+        self.assertEquals(my_list.size, 0)
+        self.assertEquals(my_list.query(10), False)
+
+    def test_query_5_after_inserting_4_and_5_to_list(self):
+        my_list = List()
+        my_list.insert(4)
+        my_list.insert(5)
+        self.assertEquals(my_list.size, 2)
+        self.assertEquals(my_list.root.value, 4)
+        self.assertEquals(my_list.root.next.value, 5)
+        self.assertEquals(my_list.query(5), my_list.root.next)
+
+    def test_to_string(self):
+        my_list = List()
+        my_list.insert(0)
+        my_list.insert(2)
+        self.assertEquals(my_list.to_string(), "0 2")
+
+
+class MoveToFrontListTestCase(unittest.TestCase):
+
+    def test_query_8_after_inserting_8_to_list(self):
+        my_list = MoveToFrontList()
+        my_list.insert(8)
+        self.assertEquals(my_list.root.value, 8)
+        self.assertEquals(my_list.root.next, None)
+        my_list.query(8)
+        self.assertEquals(my_list.root.value, 8)
+
+    def test_query_7_after_inserting_6_and_7_to_list(self):
+        my_list = MoveToFrontList()
+        my_list.insert(6)
+        my_list.insert(7)
+        self.assertEquals(my_list.root.value, 6)
+        self.assertEquals(my_list.root.next.value, 7)
+        my_list.query(7)
+        self.assertEquals(my_list.root.value, 7)
+        self.assertEquals(my_list.root.next.value, 6)
+
+    def test_query_11_after_inserting_9_10_11_12_to_list(self):
+        my_list = MoveToFrontList()
+        my_list.insert(9)
+        my_list.insert(10)
+        my_list.insert(11)
+        my_list.insert(12)
+        self.assertEquals(my_list.root.value, 9)
+        self.assertEquals(my_list.root.next.value, 10)
+        self.assertEquals(my_list.root.next.next.value, 11)
+        self.assertEquals(my_list.root.next.next.next.value, 12)
+        my_list.query(11)
+        self.assertEquals(my_list.root.value, 11)
+        self.assertEquals(my_list.root.next.value, 9)
+        self.assertEquals(my_list.root.next.next.value, 10)
+        self.assertEquals(my_list.root.next.next.next.value, 12)
+

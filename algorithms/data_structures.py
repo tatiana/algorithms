@@ -1,7 +1,8 @@
 # TODO: Integrate with Sphinx, for API generation
 # TODO: Analyse by_node methods
 # TODO: ROOT_REFERENCE = 0, 1 # height, etc
-# TODO: insert list of nodes
+# TODO: Add depth attrib to Node, so depth_from_node doesn't need
+# to be called
 
 
 class BinaryNode(object):
@@ -341,3 +342,100 @@ class AVLTree(BinarySearchTree):
         root = super(AVLTree, self).remove_node(root, value)
         root = self._balance_tree(root)
         return root
+
+
+class OptimalBinarySearchTree(BinarySearchTree):
+    pass
+
+
+class ListItem(object):
+
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+
+class List(object):
+
+    def __init__(self):
+        self.root = None
+        self.size = 0
+
+    def insert(self, value):
+        if not self.query(value):
+            self.root = self.insert_item(self.root, value)
+            self.size += 1
+
+    def insert_item(self, item, value):
+        """
+        Create an item with @value and add it to the end of the list.
+        """
+        if item is None:
+            return ListItem(value)
+        else:
+            item.next = self.insert_item(item.next, value)
+        return item
+
+    def query(self, value):
+        """
+        Retrieve a node with the @value from the root of the tree. If not
+        found, return False.
+
+        Note: Implemented using depth first search (DFS).
+        """
+        return self.query_from_item(value, self.root)
+
+    def query_from_item(self, value, item):
+        if item is None:
+            return False
+        elif item.value == value:
+            return item
+        else:
+            return self.query_from_item(value, item.next)
+        #while item is not None:
+        #    if item.value == value:
+        #        return item
+        #    item = item.next
+        #return False
+
+    def to_string(self):
+        string = ""
+        item = self.root
+        while item is not None:
+            string = " ".join([string, str(item.value)])
+            item = item.next
+        return string.strip()
+
+#class MoveToFrontList(list):
+#
+#    def __getitem__(self, index):
+#        self.insert(0, self.pop(index))
+#        return super(MoveToFrontList, self).__getitem__(0)
+
+
+class MoveToFrontList(List):
+
+    def query(self, value):
+        previous_node = self.query_from_item(value, self.root)
+        if isinstance(previous_node, ListItem):
+            new_root = previous_node.next
+            previous_node.next = new_root.next
+            new_root.next = self.root
+            self.root = new_root
+            return new_root
+        elif previous_node:
+            return self.root
+        else:
+            return False
+
+    def query_from_item(self, value, item):
+        if item is None:
+            return False
+        elif item.value == value:
+            return True
+        else:
+            previous_item = self.query_from_item(value, item.next)
+            if isinstance(previous_item, ListItem):
+                return previous_item
+            elif previous_item:
+                return item
