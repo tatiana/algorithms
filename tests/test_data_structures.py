@@ -1,5 +1,6 @@
 import unittest
-from algorithms.data_structures import AVLTree, BinaryNode, BinarySearchTree, Tree, List, MoveToFrontList #OptimalBinarySearchTree,
+from algorithms.data_structures import AVLTree, BinaryNode, BinarySearchTree, Tree, List, MoveToFrontList, HashEntry, MyString, HashTable
+#OptimalBinarySearchTree,
 from fixtures import TREE_WITH_1, TREE_WITH_6, TREE_WITH_7
 
 
@@ -429,4 +430,94 @@ class MoveToFrontListTestCase(unittest.TestCase):
         self.assertEquals(my_list.root.next.value, 9)
         self.assertEquals(my_list.root.next.next.value, 10)
         self.assertEquals(my_list.root.next.next.next.value, 12)
+
+
+class MyStringTestCase(unittest.TestCase):
+
+    def test_my_string_hash_0(self):
+        s = MyString("")
+        self.assertEquals(hash(s), 0)
+
+    def test_my_string_hash_3_with_prime_5(self):
+        s = MyString("a")
+        s.prime_number = 5
+        self.assertEquals(s.prime_number, 5)
+        self.assertEquals(hash(s), 3)
+
+    def test_my_string_hash_192651(self):
+        MyString.prime_number = 280697
+        s = MyString("abc")
+        self.assertEquals(s.prime_number, 280697)
+        self.assertEquals(hash(s), 192651)
+
+    def test_getter_prime_number_not_none(self):
+        s = MyString("seven")
+        s.prime_number = 7
+        self.assertEquals(s.prime_number, 7)
+
+
+class HashEntryTestCase(unittest.TestCase):
+
+    def test_hash_entry_constructor(self):
+        hash_entry = HashEntry(1, "tati")
+        self.assertEquals(hash_entry.key, 1)
+        self.assertEquals(hash_entry.value_list, ["tati"])
+
+    def test_append_jan_to_hash_entry(self):
+        hash_entry = HashEntry(2, "tati")
+        hash_entry.append("jan")
+        self.assertEquals(hash_entry.key, 2)
+        self.assertEquals(hash_entry.value_list, ["tati", "jan"])
+
+    def test_query_exists_in_hash_entry(self):
+        hash_entry = HashEntry(3, "lilian")
+        hash_entry.append("nina")
+        self.assertTrue(hash_entry.query("lilian"))
+        self.assertTrue(hash_entry.query("nina"))
+
+    def test_query_doesnt_exist_in_hash_entry(self):
+        hash_entry = HashEntry(4, "roberto")
+        self.assertFalse(hash_entry.query("onofre"))
+
+
+class HashTableTestCase(unittest.TestCase):
+
+    def test_construct_hash_table(self):
+        table = HashTable(3)
+        self.assertEquals(table.maximum, 3)
+        self.assertEquals(table.array, [None, None, None])
+
+    def test_append_hash_table(self):
+        table = HashTable(3)
+        self.assertEquals(table.maximum, 3)
+        self.assertEquals(table.array, [None, None, None])
+
+    def test_insert_abc_to_hash_table(self):
+        table = HashTable(5)
+        table.insert("abc")
+        self.assertEquals(len(table.array[0].value_list), 1)
+
+    def test_insert_a_d_to_hash_table(self):
+        table = HashTable(5)
+        table.insert("a")
+        table.insert("d")
+        self.assertEquals(len(table.array[3].value_list), 2)
+
+    def test_query_android_in_empty_hash_table(self):
+        table = HashTable(11)
+        self.assertFalse(table.query("android"))
+
+    def test_query_android_in_hash_table_that_contains_it(self):
+        table = HashTable(11)
+        table.insert("android")
+        self.assertTrue(table.query("android"))
+
+    def test_query_e_g_to_hash_table(self):
+        table = HashTable(5)
+        table.insert("e")
+        table.insert("g")
+        self.assertTrue(table.query("e"))
+        self.assertTrue(table.query("g"))
+
+
 

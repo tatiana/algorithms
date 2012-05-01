@@ -3,7 +3,7 @@
 # TODO: ROOT_REFERENCE = 0, 1 # height, etc
 # TODO: Add depth attrib to Node, so depth_from_node doesn't need
 # to be called
-
+from algorithms.utils import isprime
 
 class BinaryNode(object):
 
@@ -439,3 +439,79 @@ class MoveToFrontList(List):
                 return previous_item
             elif previous_item:
                 return item
+
+
+#PRIME_NUMBER = 766109 # total of 766108 words in the file bible.txt
+PRIME_NUMBER = 280697 # total of 280685 words in the file world192.txt
+
+def c_mul(a, b):
+    return eval(hex((long(a) * b) & 0xFFFFFFFFL)[:-1])
+
+class MyString(str):
+
+    _prime_number = None
+
+    @property
+    def prime_number(self):
+        if self._prime_number is None:
+            return PRIME_NUMBER
+        else:
+            return self._prime_number
+
+    @prime_number.setter
+    def prime_number(self, value):
+        if isprime(value):
+            self._prime_number = value
+
+    def __hash__(self):
+        if not self:
+            return 0
+        value = ord(self[0]) << 7
+        for char in self:
+            value = c_mul(1000003, value) ^ ord(char)
+        # value = value ^ len(self)
+        value = value % self.prime_number
+        return value
+
+
+class HashEntry(object):
+
+    def __init__(self, key, value):
+        self.key = key
+        self.value_list = [value]
+
+    def append(self, value):
+        if not self.query(value):
+            self.value_list.append(value)
+
+    def query(self, value):
+        return value in self.value_list
+
+
+class HashTable(object):
+
+    def __init__(self, maximum = PRIME_NUMBER):
+        self.maximum = maximum
+        self.array = [None for i in xrange(maximum)]
+        MyString.prime_number = maximum
+
+    def insert(self, string):
+        string = MyString(string)
+        index = hash(string)
+        if self.array[index] is None:
+            self.array[index] = HashEntry(index, string)
+        else:
+            hash_entry = self.array[index]
+            hash_entry.append(string)
+
+    def query(self, string):
+        string = MyString(string)
+        index = hash(string)
+        entry = self.array[index]
+        if entry is not None:
+            return self.array[index].query(string)
+        return False
+
+
+
+
