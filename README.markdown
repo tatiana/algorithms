@@ -21,4 +21,8 @@ Algorithms for sorting - yep, I know Python's default sort method ;)
 
 # data structures
 
-* BinarySearchTree
+* AVLTree                   # Adelson-Velskii and Landis proposal for Balanced Search Trees
+* BinarySearchTree          # Traditional Binary Search Tree (BST)
+* HashTable                 # Example of Hash Table implementation (not using Python dict)
+* MoveToFrontList           # Move to front list, also known as MTF
+* OptimalBinarySearchTree   # Based on previously known frequencies of access of a pre-defined group of keys (CLRS)
