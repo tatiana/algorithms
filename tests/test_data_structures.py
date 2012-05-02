@@ -1,6 +1,5 @@
 import unittest
-from algorithms.data_structures import AVLTree, BinaryNode, BinarySearchTree, Tree, List, MoveToFrontList, HashEntry, MyString, HashTable
-#OptimalBinarySearchTree,
+from algorithms.data_structures import AVLTree, BinaryNode, BinarySearchTree, Tree, List, MoveToFrontList, HashEntry, MyString, HashTable, OptimalBinarySearchTree, OptimalBinaryNode
 from fixtures import TREE_WITH_1, TREE_WITH_6, TREE_WITH_7
 
 
@@ -11,6 +10,29 @@ class BinaryNodeTestCase(unittest.TestCase):
         self.assertEquals(node.left, None)
         self.assertEquals(node.right, None)
         self.assertEquals(node.value, 'palavra')
+        self.assertEquals(node.depth, 0)
+
+    def test_equal_nodes(self):
+        node1 = BinaryNode("arara")
+        node2 = BinaryNode("arara")
+        self.assertEquals(node1, node2)
+
+    def test_not_equal_nodes(self):
+        node1 = BinaryNode("papagaio")
+        node2 = BinaryNode("arara azul")
+        assert node1 != node2
+
+    def test_less_node(self):
+        node1 = BinaryNode("Rio de Janeiro")
+        node2 = BinaryNode("Curitiba")
+        self.assertTrue(node1 > node2)
+
+    def test_greater_node(self):
+        node1 = BinaryNode("Uberaba")
+        node2 = BinaryNode("Uberlandia")
+        self.assertTrue(node1 < node2)
+
+
 
 
 class TreeTestCase(unittest.TestCase):
@@ -519,5 +541,39 @@ class HashTableTestCase(unittest.TestCase):
         self.assertTrue(table.query("e"))
         self.assertTrue(table.query("g"))
 
+
+class OptimalBinaryNodeTestCase(unittest.TestCase):
+
+    def test_create_node(self):
+        node = OptimalBinaryNode("balanoglosos", 0.5)
+        self.assertEquals(node.value, "balanoglosos")
+        self.assertEquals(node.probability, 0.5)
+        self.assertEquals(node.depth, 0)
+        self.assertEquals(node.cost, 1)
+
+
+class OptimalBinarySearchTreeTestCase(unittest.TestCase):
+
+    def test_contructor(self):
+       tree = OptimalBinarySearchTree()
+       self.assertEquals(tree.num_keys, 0)
+       self.assertEquals(tree.keys, [])
+       self.assertEquals(tree.probabilities, [])
+       self.assertEquals(tree.dummy_probabilities, [1])
+
+    def test_constructor(self):
+        tree = OptimalBinarySearchTree()
+        tree.num_keys = 5
+        tree.keys = [0, 1, 2, 3, 4, 5]
+        tree.probabilities = [0, 0.15, 0.10, 0.05, 0.10, 0.20]
+        tree.dummy_probabilities = [0.05, 0.10, 0.05, 0.05, 0.05, 0.10]
+
+        tree.construct_optimal_BST()
+
+        self.assertEquals(tree.root.value, 2)
+        self.assertEquals(tree.root.left.value, 1)
+        self.assertEquals(tree.root.right.value, 5)
+        self.assertEquals(tree.root.right.left.value, 4)
+        self.assertEquals(tree.root.right.left.left.value, 3)
 
 

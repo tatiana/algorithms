@@ -11,6 +11,19 @@ class BinaryNode(object):
         self.right = None
         self.left = None
         self.value = value
+        self.depth = 0
+
+    def __eq__(self, other):
+        return self.value == other.value
+
+    def __ne__(self, other):
+        return self.value != other.value
+
+    def __lt__(self, other):
+        return self.value < other.value
+
+    def __gt__(self, other):
+        return self.value > other.value
 
 
 class Tree(object):
@@ -159,7 +172,7 @@ class BinarySearchTree(Tree):
         return False.
         """
         node = self.query(value)
-        if node == False:
+        if node is False:
             return False
         else:
             self.root = self.remove_node(value, self.root)
@@ -344,10 +357,6 @@ class AVLTree(BinarySearchTree):
         return root
 
 
-class OptimalBinarySearchTree(BinarySearchTree):
-    pass
-
-
 class ListItem(object):
 
     def __init__(self, value):
@@ -513,5 +522,60 @@ class HashTable(object):
         return False
 
 
+class OptimalBinaryNode(BinaryNode):
 
+    def __init__(self, value, probability = 0):
+        super(OptimalBinaryNode, self).__init__(value)
+        self.probability = probability
+
+    @property
+    def cost(self):
+        return self.depth + 1
+
+
+class OptimalBinarySearchTree(BinarySearchTree):
+    def __init__(self):
+        super(OptimalBinarySearchTree, self).__init__()
+        self.num_keys = 0
+        self.keys = []
+        self.probabilities = []
+        self.dummy_probabilities = [1]
+
+    def optimal_BST(self):
+        n = len(self.keys) + 1
+        root_matrix = [[0 for i in xrange(n)] for j in xrange(n)]
+        probabilities_sum_matrix = [[0 for i in xrange(n)] for j in xrange(n)]
+        expected_cost_matrix = [[99999 for i in xrange(n)] for j in xrange(n)]
+        for i in xrange(1, n):
+            probabilities_sum_matrix[i][i-1] = self.dummy_probabilities[i - 1]
+            expected_cost_matrix[i][i-1] = self.dummy_probabilities[i - 1]
+
+        for l in xrange(1, n):
+            for i in xrange(1, n - l):
+                j = i + l - 1
+                expected_cost_matrix[i][j] = 99999
+                probabilities_sum_matrix[i][j] = probabilities_sum_matrix[i][j - 1] + self.probabilities[j] + self.dummy_probabilities[j]
+                for r in xrange(i, j + 1):
+                    t = expected_cost_matrix[i][r - 1] + expected_cost_matrix[r+1][j] + probabilities_sum_matrix[i][j]
+                    if t < expected_cost_matrix[i][j]:
+                        expected_cost_matrix[i][j] = t
+                        root_matrix[i][j] = r
+        return root_matrix
+
+    def construct_optimal_BST(self):
+        root = self.optimal_BST()
+        n = 5
+        r = root[1][n]
+        value = self.keys[r]
+        self.insert(value)
+        self.construct_optimal_subtree(1, r-1, r, "left", root)
+        self.construct_optimal_subtree(r+1, n, r, "right", root)
+
+    def construct_optimal_subtree(self, i, j, r, direction, root):
+        if i <= j:
+            t = root[i][j]
+            value = self.keys[t]
+            self.insert(value)
+            self.construct_optimal_subtree(i, t-1, t, "left", root)
+            self.construct_optimal_subtree(t+1, j, t, "right", root)
 
