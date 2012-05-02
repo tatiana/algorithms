@@ -564,7 +564,7 @@ class OptimalBinarySearchTree(BinarySearchTree):
 
     def construct_optimal_BST(self):
         root = self.optimal_BST()
-        n = 5
+        n = self.num_keys
         r = root[1][n]
         value = self.keys[r]
         self.insert(value)

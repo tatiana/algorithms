@@ -561,7 +561,7 @@ class OptimalBinarySearchTreeTestCase(unittest.TestCase):
        self.assertEquals(tree.probabilities, [])
        self.assertEquals(tree.dummy_probabilities, [1])
 
-    def test_constructor(self):
+    def test_example_cormen(self):
         tree = OptimalBinarySearchTree()
         tree.num_keys = 5
         tree.keys = [0, 1, 2, 3, 4, 5]
@@ -577,3 +577,27 @@ class OptimalBinarySearchTreeTestCase(unittest.TestCase):
         self.assertEquals(tree.root.right.left.left.value, 3)
 
 
+    def test_example_site(self):
+        # http://www.augustana.ca/~jmohr/courses/2004.winter/csc310/lecture_notes/optimal_bst.html
+        tree = OptimalBinarySearchTree()
+        tree.num_keys = 15
+        tree.keys = ["","and", "cabbage", "come", "has", "king", "of", "pig", "ring", "said", "talk", "the", "thing", "time", "walrus", "wing"]
+        tree.probabilities = [0, .150, .025, .050, .025, .050, .125, .025, .075, .075, .050, .150, .075, .050, .025, .050]
+        tree.dummy_probabilities = [0 for i in xrange(17)]
+
+        tree.construct_optimal_BST()
+        self.assertEquals(tree.root.value, "of")
+        self.assertEquals(tree.root.left.value, "and")
+        self.assertEquals(tree.root.left.right.value, "come")
+        self.assertEquals(tree.root.left.right.left.value, "cabbage")
+        self.assertEquals(tree.root.left.right.right.value, "king")
+        self.assertEquals(tree.root.left.right.right.left.value, "has")
+        self.assertEquals(tree.root.right.value, "the")
+        self.assertEquals(tree.root.right.left.value, "said")
+        self.assertEquals(tree.root.right.left.left.value, "ring")
+        self.assertEquals(tree.root.right.left.right.value, "talk")
+        self.assertEquals(tree.root.right.left.left.left.value, "pig")
+        self.assertEquals(tree.root.right.right.value, "time")
+        self.assertEquals(tree.root.right.right.left.value, "thing")
+        self.assertEquals(tree.root.right.right.right.value, "wing")
+        self.assertEquals(tree.root.right.right.right.left.value, "walrus")
